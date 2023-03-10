@@ -23,10 +23,10 @@ Requires:      glite-info-update-endpoints
 %setup -q
 
 %build
-rm -rf %{buildroot}
-make install prefix=%{buildroot}
 
 %install
+rm -rf %{buildroot}
+make install prefix=%{buildroot}
 
 %clean
 rm -rf %{buildroot}
