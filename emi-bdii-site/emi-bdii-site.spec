@@ -37,7 +37,7 @@ rm -rf %{buildroot}
 %license /usr/share/licenses/%{name}-%{version}/LICENSE.txt
 
 %changelog
-* Fri Mar 10 2024 Baptiste Grenier <baptiste.grenier@egi.eu> - 1.1.0-1
+* Fri Mar 10 2023 Baptiste Grenier <baptiste.grenier@egi.eu> - 1.1.0-1
 - Build and release using GitHub Actions (#2) (Baptiste Grenier)
 
 * Fri Sep 04 2015 Maria Alandes <maria.alandes.pradillo@cern.ch> - 1.0.2-1
