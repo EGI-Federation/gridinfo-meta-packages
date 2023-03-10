@@ -17,6 +17,7 @@ install:
 dist:
 	@mkdir -p $(build)/$(NAME)-$(VERSION)/
 	rsync -HaS --exclude ".git" --exclude "$(build)" * $(build)/$(NAME)-$(VERSION)/
+	cp ../LICENSE.txt ../COPYRIGHT $(build)/$(NAME)-$(VERSION)/
 	cd $(build); tar --gzip -cf $(NAME)-$(VERSION).tar.gz $(NAME)-$(VERSION)/; cd -
 
 sources: dist

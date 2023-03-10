@@ -40,8 +40,10 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-/opt/glite/release/glite-BDII_site/LICENCE
-/opt/glite/release/glite-BDII_site/glite-version
+/opt/glite/release/${name}/glite-version
+%doc %{_docdir}/%{name}-%{version}/AUTHORS.md
+%license /usr/share/licenses/%{name}-%{version}/COPYRIGHT
+%license /usr/share/licenses/%{name}-%{version}/LICENSE.txt
 
 %changelog
 * Fri May 21 2010 Laurence Field <laurence.field@cern.ch> - %{version}-%{release}
