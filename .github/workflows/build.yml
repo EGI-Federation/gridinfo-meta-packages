@@ -24,6 +24,7 @@ jobs:
           yum-builddep -y ${{ matrix.rpm-name }}.spec
       - name: build rpm
         run: |
+          cd ${{ matrix.rpm-name }}
           make clean rpm
           rpmlint --file .rpmlint.ini build/RPMS/noarch/*.el7.noarch.rpm
       - name: Upload RPMs
@@ -31,7 +32,7 @@ jobs:
         with:
           name: rpms7
           path: |
-            build/RPMS/noarch/${{ matrix.rpm-name }}-*.el7.noarch.rpm
+            ${{ matrix.rpm-name }}/build/RPMS/noarch/${{ matrix.rpm-name }}-*.el7.noarch.rpm
 
   # Use a matrix for CentOS Stream versions
   build:
@@ -53,6 +54,7 @@ jobs:
           yum-builddep -y ${{ matrix.rpm-name }}.spec
       - name: build rpm
         run: |
+          cd ${{ matrix.rpm-name }}
           make clean rpm
           rpmlint --file .rpmlint.ini build/RPMS/noarch/*.el${{ matrix.centos-version }}.noarch.rpm
       - name: Upload RPMs
@@ -60,7 +62,7 @@ jobs:
         with:
           name: rpms${{ matrix.centos-version }}-${{ matrix.rpm-name }}
           path: |
-            build/RPMS/noarch/${{ matrix.rpm-name }}-*.el${{ matrix.centos-version }}.noarch.rpm
+            ${{ matrix.rpm-name }}/build/RPMS/noarch/${{ matrix.rpm-name }}-*.el${{ matrix.centos-version }}.noarch.rpm
 
   install-centos7:
     strategy:
@@ -76,7 +78,7 @@ jobs:
           name: rpms7-${{ matrix.rpm-name }}
       - name: Install generated RPMs
         run: |
-          yum localinstall -y  ${{ matrix.rpm-name }}-*.el7.noarch.rpm
+          yum localinstall -y ${{ matrix.rpm-name }}-*.el7.noarch.rpm
 
   # Dependency from PowerTools: openldap-servers
   centos8-install:
