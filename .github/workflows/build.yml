@@ -1,0 +1,115 @@
+---
+name: Create packages and test installation
+
+on:
+  pull_request:
+
+jobs:
+  # XXX done outside of the build matrix due to different container name
+  build-centos7:
+    strategy:
+      matrix:
+        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service, glite-BDII_site, glite-BDII_top]
+    name: Build ${{ matrix.rpm-name }} CentOS 7 RPMs
+    runs-on: ubuntu-latest
+    container: quay.io/centos/centos:7
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install build requisites
+        run: |
+          yum install -y rpm-build yum-utils rpmlint
+          cd ${{ matrix.rpm-name }}
+          yum-builddep -y ${{ matrix.rpm-name }}.spec
+      - name: build rpm
+        run: |
+          make clean rpm
+          rpmlint --file .rpmlint.ini build/RPMS/noarch/*.el7.noarch.rpm
+      - name: Upload RPMs
+        uses: actions/upload-artifact@v3
+        with:
+          name: rpms7
+          path: |
+            build/RPMS/noarch/${{ matrix.rpm-name }}-*.el7.noarch.rpm
+
+  # Use a matrix for CentOS Stream versions
+  build:
+    strategy:
+      matrix:
+        centos-version: [8, 9]
+        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service, glite-BDII_site, glite-BDII_top]
+    name: Build CentOS ${{ matrix.rpm-name }} ${{ matrix.centos-version }} RPMs
+    runs-on: ubuntu-latest
+    container: quay.io/centos/centos:stream${{ matrix.centos-version }}
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+      - name: Install build requisites
+        run: |
+          yum install -y rpm-build yum-utils rpmlint
+          cd ${{ matrix.rpm-name }}
+          yum-builddep -y ${{ matrix.rpm-name }}.spec
+      - name: build rpm
+        run: |
+          make clean rpm
+          rpmlint --file .rpmlint.ini build/RPMS/noarch/*.el${{ matrix.centos-version }}.noarch.rpm
+      - name: Upload RPMs
+        uses: actions/upload-artifact@v3
+        with:
+          name: rpms${{ matrix.centos-version }}-${{ matrix.rpm-name }}
+          path: |
+            build/RPMS/noarch/${{ matrix.rpm-name }}-*.el${{ matrix.centos-version }}.noarch.rpm
+
+  install-centos7:
+    strategy:
+      matrix:
+        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service, glite-BDII_site, glite-BDII_top]
+    name: Install ${{ matrix.rpm-name }} CentOS 7 RPMs
+    needs: build-centos7
+    runs-on: ubuntu-latest
+    container: quay.io/centos/centos:7
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: rpms7-${{ matrix.rpm-name }}
+      - name: Install generated RPMs
+        run: |
+          yum localinstall -y  ${{ matrix.rpm-name }}-*.el7.noarch.rpm
+
+  # Dependency from PowerTools: openldap-servers
+  centos8-install:
+    strategy:
+      matrix:
+        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service, glite-BDII_site, glite-BDII_top]
+    name: Install ${{ matrix.rpm-name }} CentOS Stream 8 RPMs
+    needs: build
+    runs-on: ubuntu-latest
+    container: quay.io/centos/centos:stream8
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: rpms8-${{ matrix.rpm-name }}
+      - name: Install generated RPMs
+        run: |
+          sed -i 's/^enabled=0/enabled=1/' /etc/yum.repos.d/CentOS-Stream-PowerTools.repo
+          yum localinstall -y ${{ matrix.rpm-name }}-*.el8.noarch.rpm
+
+  # XXX Dependencies from EPEL: openldap-servers
+  centos9-install:
+    strategy:
+      matrix:
+        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service, glite-BDII_site, glite-BDII_top]
+    name: Install ${{ matrix.rpm-name }} CentOS Stream 9 RPMs
+    needs: build
+    runs-on: ubuntu-latest
+    container: quay.io/centos/centos:stream9
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: rpms9-${{ matrix.rpm-name }}
+      - name: Install generated RPMs
+        run: |
+          yum install -y epel-release
+          yum localinstall -y ${{ matrix.rpm-name }}-*.el9.noarch.rpm
