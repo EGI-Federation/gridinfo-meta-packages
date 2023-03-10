@@ -40,7 +40,7 @@ rm -rf %{buildroot}
 
 %files
 %defattr(-,root,root,-)
-/opt/glite/release/${name}/glite-version
+/opt/glite/release/%{name}-%{version}/glite-version
 %doc %{_docdir}/%{name}-%{version}/AUTHORS.md
 %license /usr/share/licenses/%{name}-%{version}/COPYRIGHT
 %license /usr/share/licenses/%{name}-%{version}/LICENSE.txt
