@@ -1,17 +1,20 @@
-Name:		emi-bdii-top
-Version:	1.0.3
-Release:	2%{?dist}
-Summary:	Metapackage for top BDII 
-Group:		Unknown
-License:	ASL 2.0
-Source:		%{name}-%{version}.tar.gz
-BuildArch:	noarch
-BuildRoot:      %{_tmppath}/%{name}-%{version}-build
-Requires:       emi-resource-information-service
-Requires:       glite-info-provider-ldap
-Requires:       bdii-config-top
-Obsoletes:      glite-info-plugin-fcr
-Requires:       glite-info-update-endpoints
+Name:          emi-bdii-top
+Version:       1.0.3
+Release:       2%{?dist}
+Summary:       Metapackage for Top BDII
+Group:         Unknown
+License:       ASL 2.0
+URL:           https://github.com/EGI-Foundation/gridinfo-meta-packages
+Source:        %{name}-%{version}.tar.gz
+BuildArch:     noarch
+BuildRoot:     %{_tmppath}/%{name}-%{version}-build
+BuildRequires: rsync
+BuildRequires: make
+Requires:      emi-resource-information-service
+Requires:      glite-info-provider-ldap
+Requires:      bdii-config-top
+Obsoletes:     glite-info-plugin-fcr
+Requires:      glite-info-update-endpoints
 
 %description
 %{summary}
@@ -24,6 +27,9 @@ rm -rf %{buildroot}
 make install prefix=%{buildroot}
 
 %install
+
+%clean
+rm -rf %{buildroot}
 
 %files
 
