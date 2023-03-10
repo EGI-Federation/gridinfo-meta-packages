@@ -13,7 +13,7 @@ jobs:
   centos7:
     strategy:
       matrix:
-        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service, glite-BDII_site, glite-BDII_top]
+        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Build ${{ matrix.rpm-name }} CentOS 7 RPMs
     runs-on: ubuntu-latest
     container: quay.io/centos/centos:7
@@ -40,7 +40,7 @@ jobs:
   centos8:
     strategy:
       matrix:
-        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service, glite-BDII_site, glite-BDII_top]
+        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Build ${{ matrix.rpm-name }} CentOS Stream 8 RPMs
     runs-on: ubuntu-latest
     container: quay.io/centos/centos:stream8
@@ -65,6 +65,9 @@ jobs:
             build/SRPMS/${{ matrix.rpm-name }}-*-1.el8.src.rpm
 
   centos9:
+    strategy:
+      matrix:
+        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Build CentOS Stream 9 RPMs
     runs-on: ubuntu-latest
     container: quay.io/centos/centos:stream9
@@ -91,7 +94,7 @@ jobs:
   release7:
     strategy:
       matrix:
-        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service, glite-BDII_site, glite-BDII_top]
+        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Upload ${{ matrix.rpm-name }} CentOS 7 release artefacts
     needs: centos7-${{ matrix.rpm-name }}
     runs-on: ubuntu-latest
@@ -119,7 +122,7 @@ jobs:
   release8:
     strategy:
       matrix:
-        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service, glite-BDII_site, glite-BDII_top]
+        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Upload ${{ matrix.rpm-name }} CentOS Stream 8 release artefacts
     needs: centos8-${{ matrix.rpm-name }}
     runs-on: ubuntu-latest
@@ -147,7 +150,7 @@ jobs:
   release9:
     strategy:
       matrix:
-        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service, glite-BDII_site, glite-BDII_top]
+        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Upload ${{ matrix.rpm-name }} CentOS Stream 9 release artefacts
     needs: centos9-${{ matrix.rpm-name }}
     runs-on: ubuntu-latest

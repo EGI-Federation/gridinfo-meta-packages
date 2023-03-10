@@ -10,7 +10,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service, glite-BDII_site, glite-BDII_top]
+        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Build ${{ matrix.rpm-name }} CentOS 7 RPMs
     runs-on: ubuntu-latest
     container: quay.io/centos/centos:7
@@ -41,7 +41,7 @@ jobs:
       fail-fast: false
       matrix:
         centos-version: [8, 9]
-        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service, glite-BDII_site, glite-BDII_top]
+        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Build ${{ matrix.rpm-name }} CentOS ${{ matrix.centos-version }} RPMs
     runs-on: ubuntu-latest
     container: quay.io/centos/centos:stream${{ matrix.centos-version }}
@@ -70,7 +70,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service, glite-BDII_site, glite-BDII_top]
+        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Install ${{ matrix.rpm-name }} CentOS 7 RPMs
     needs: build-centos7
     runs-on: ubuntu-latest
@@ -89,7 +89,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service, glite-BDII_site, glite-BDII_top]
+        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Install ${{ matrix.rpm-name }} CentOS Stream 8 RPMs
     needs: build
     runs-on: ubuntu-latest
@@ -108,7 +108,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service, glite-BDII_site, glite-BDII_top]
+        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Install ${{ matrix.rpm-name }} CentOS Stream 9 RPMs
     needs: build
     runs-on: ubuntu-latest
