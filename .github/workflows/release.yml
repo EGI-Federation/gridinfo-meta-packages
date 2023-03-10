@@ -96,7 +96,7 @@ jobs:
       matrix:
         rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Upload ${{ matrix.rpm-name }} CentOS 7 release artefacts
-    needs: centos7-${{ matrix.rpm-name }}
+    needs: centos7
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v3
@@ -124,7 +124,7 @@ jobs:
       matrix:
         rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Upload ${{ matrix.rpm-name }} CentOS Stream 8 release artefacts
-    needs: centos8-${{ matrix.rpm-name }}
+    needs: centos8
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v3
@@ -152,7 +152,7 @@ jobs:
       matrix:
         rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Upload ${{ matrix.rpm-name }} CentOS Stream 9 release artefacts
-    needs: centos9-${{ matrix.rpm-name }}
+    needs: centos9
     runs-on: ubuntu-latest
     steps:
       - uses: actions/download-artifact@v3
