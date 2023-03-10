@@ -34,8 +34,8 @@ $ docker run --rm -v $(pwd):/source -it quay.io/centos/centos:7
 [root@8a9d60c61f42 /]# yum install -y rpm-build yum-utils
 # Move to the required package-specific directory
 [root@8a9d60c61f42 /]# cd /source/emi-bdii-site
-[root@8a9d60c61f42 /]# yum-builddep -y emi-bdii-site.spec
-[root@8a9d60c61f42 /]# make rpm
+[root@8a9d60c61f42 emi-bdii-site]# yum-builddep -y emi-bdii-site.spec
+[root@8a9d60c61f42 emi-bdii-site]# make rpm
 ```
 
 The RPM will be available into the `build/RPMS` directory.
