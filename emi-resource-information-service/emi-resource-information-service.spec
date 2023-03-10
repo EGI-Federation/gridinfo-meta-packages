@@ -31,6 +31,9 @@ make install prefix=%{buildroot}
 rm -rf %{buildroot}
 
 %files
+%doc %{_docdir}/%{name}-%{version}/AUTHORS.md
+%license /usr/share/licenses/%{name}-%{version}/COPYRIGHT
+%license /usr/share/licenses/%{name}-%{version}/LICENSE.txt
 
 %changelog
 * Fri Sep 04 2015 Maria Alandes <maria.alandes.pradillo@cern.ch> - 1.0.4-1

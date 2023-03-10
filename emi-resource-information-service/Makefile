@@ -11,10 +11,16 @@ default:
 install:
 	@echo installing ...
 	@mkdir -p $(prefix)
+	@mkdir -p $(prefix)/usr/share/doc/$(NAME)-$(VERSION)
+	@mkdir -p $(prefix)/usr/share/licenses/$(NAME)-$(VERSION)
+	@install -m 0644 AUTHORS.md $(prefix)/usr/share/doc/$(NAME)-$(VERSION)/
+	@install -m 0644 COPYRIGHT $(prefix)/usr/share/licenses/$(NAME)-$(VERSION)/
+	@install -m 0644 LICENSE.txt $(prefix)/usr/share/licenses/$(NAME)-$(VERSION)/
 
 dist:
 	@mkdir -p $(build)/$(NAME)-$(VERSION)/
 	rsync -HaS --exclude ".git" --exclude "$(build)" * $(build)/$(NAME)-$(VERSION)/
+	cp ../LICENSE.txt ../COPYRIGHT ../AUTHORS.md $(build)/$(NAME)-$(VERSION)/
 	cd $(build); tar --gzip -cf $(NAME)-$(VERSION).tar.gz $(NAME)-$(VERSION)/; cd -
 
 sources: dist
