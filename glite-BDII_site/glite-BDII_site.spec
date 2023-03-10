@@ -1,7 +1,7 @@
 Name:          glite-BDII_site
 Version:       3.2.6
 Release:       1%{?dist}
-Summary:       The meta-package for the site-level BDII service.
+Summary:       The meta-package for the site-level BDII service
 Group:         Unknown
 License:       ASL 2.0
 URL:           https://github.com/EGI-Foundation/gridinfo-meta-packages
