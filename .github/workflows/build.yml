@@ -40,7 +40,7 @@ jobs:
       matrix:
         centos-version: [8, 9]
         rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service, glite-BDII_site, glite-BDII_top]
-    name: Build CentOS ${{ matrix.rpm-name }} ${{ matrix.centos-version }} RPMs
+    name: Build ${{ matrix.rpm-name }} CentOS ${{ matrix.centos-version }} RPMs
     runs-on: ubuntu-latest
     container: quay.io/centos/centos:stream${{ matrix.centos-version }}
     steps:
