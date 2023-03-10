@@ -30,7 +30,7 @@ jobs:
       - name: Upload RPMs
         uses: actions/upload-artifact@v3
         with:
-          name: rpms7
+          name: rpms7-${{ matrix.rpm-name }}
           path: |
             ${{ matrix.rpm-name }}/build/RPMS/noarch/${{ matrix.rpm-name }}-*.el7.noarch.rpm
 
