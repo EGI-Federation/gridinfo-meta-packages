@@ -32,7 +32,7 @@ jobs:
       - name: Upload RPMs
         uses: actions/upload-artifact@v3
         with:
-          name: rpms7
+          name: rpms7-${{ matrix.rpm-name }}
           path: |
             build/RPMS/noarch/${{ matrix.rpm-name }}-*-1.el7.noarch.rpm
             build/SRPMS/${{ matrix.rpm-name }}-*-1.el7.src.rpm
@@ -59,7 +59,7 @@ jobs:
       - name: Upload RPMs
         uses: actions/upload-artifact@v3
         with:
-          name: rpms8
+          name: rpms8-${{ matrix.rpm-name }}
           path: |
             build/RPMS/noarch/${{ matrix.rpm-name }}-*-1.el8.noarch.rpm
             build/SRPMS/${{ matrix.rpm-name }}-*-1.el8.src.rpm
@@ -83,7 +83,7 @@ jobs:
       - name: Upload RPMs
         uses: actions/upload-artifact@v3
         with:
-          name: rpms9
+          name: rpms9-${{ matrix.rpm-name }}
           path: |
             build/RPMS/noarch/${{ matrix.rpm-name }}-*-1.el9.noarch.rpm
             build/SRPMS/${{ matrix.rpm-name }}-*-1.el9.src.rpm
