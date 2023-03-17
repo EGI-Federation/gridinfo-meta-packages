@@ -1,7 +1,7 @@
 Name:          emi-bdii-top
-Version:       1.0.3
+Version:       1.1.0
 Release:       2%{?dist}
-Summary:       Metapackage for Top BDII
+Summary:       Meta-package for Top BDII
 Group:         Unknown
 License:       ASL 2.0
 URL:           https://github.com/EGI-Foundation/gridinfo-meta-packages
@@ -37,6 +37,9 @@ rm -rf %{buildroot}
 %license /usr/share/licenses/%{name}-%{version}/LICENSE.txt
 
 %changelog
+* Fri Mar 17 2023 Baptiste Grenier <baptiste.grenier@egi.eu> - 1.1.0-1
+- Build and release using GitHub Actions (#2) (Baptiste Grenier)
+
 * Fri Sep 04 2015 Maria Alandes <maria.alandes.pradillo@cern.ch> - 1.0.3-2
 - Removing yaim dependeny (Which is not available in CENTOS7)
 
