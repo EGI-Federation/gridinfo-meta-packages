@@ -36,17 +36,19 @@ jobs:
         with:
           name: rpms7-${{ matrix.rpm-name }}
           path: |
-            ${{ matrix.rpm-name }}/build/RPMS/noarch/${{ matrix.rpm-name }}-*-1.el7.noarch.rpm
-            ${{ matrix.rpm-name }}/build/SRPMS/${{ matrix.rpm-name }}-*-1.el7.src.rpm
+            ${{ matrix.rpm-name }}/build/RPMS/noarch/${{ matrix.rpm-name }}-*.el7.noarch.rpm
+            ${{ matrix.rpm-name }}/build/SRPMS/${{ matrix.rpm-name }}-*.el7.src.rpm
 
-  almalinux8:
+  # Use a matrix for AlmaLinux versions
+  build:
     strategy:
       matrix:
+        almalinux-version: [8, 9]
         rpm-name:
           [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
-    name: Build ${{ matrix.rpm-name }} AlmaLinux 8 RPMs
+    name: Build ${{ matrix.rpm-name }} AlmaLinux ${{ matrix.almalinux-version }} RPMs
     runs-on: ubuntu-latest
-    container: almalinux:8
+    container: almalinux:${{ matrix.almalinux-version }}
     steps:
       - uses: actions/checkout@v3
         with:
@@ -63,39 +65,10 @@ jobs:
       - name: Upload RPMs
         uses: actions/upload-artifact@v3
         with:
-          name: rpms8-${{ matrix.rpm-name }}
+          name: rpms${{ matrix.almalinux-version }}-${{ matrix.rpm-name }}
           path: |
-            ${{ matrix.rpm-name }}/build/RPMS/noarch/${{ matrix.rpm-name }}-*-1.el8.noarch.rpm
-            ${{ matrix.rpm-name }}/build/SRPMS/${{ matrix.rpm-name }}-*-1.el8.src.rpm
-
-  almalinux9:
-    strategy:
-      matrix:
-        rpm-name:
-          [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
-    name: Build AlmaLinux 9 RPMs
-    runs-on: ubuntu-latest
-    container: almalinux:9
-    steps:
-      - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: Install build requisites
-        run: |
-          yum install -y rpm-build yum-utils
-          cd ${{ matrix.rpm-name }}
-          yum-builddep -y ${{ matrix.rpm-name }}.spec
-      - name: Build rpm
-        run: |
-          cd ${{ matrix.rpm-name }}
-          make clean rpm
-      - name: Upload RPMs
-        uses: actions/upload-artifact@v3
-        with:
-          name: rpms9-${{ matrix.rpm-name }}
-          path: |
-            ${{ matrix.rpm-name }}/build/RPMS/noarch/${{ matrix.rpm-name }}-*-1.el9.noarch.rpm
-            ${{ matrix.rpm-name }}/build/SRPMS/${{ matrix.rpm-name }}-*-1.el9.src.rpm
+            ${{ matrix.rpm-name }}/build/RPMS/noarch/${{ matrix.rpm-name }}-*.el${{ matrix.almalinux-version }}.noarch.rpm
+            ${{ matrix.rpm-name }}/build/SRPMS/${{ matrix.rpm-name }}-*.el${{ matrix.almalinux-version }}.src.rpm
 
   release7:
     strategy:
@@ -112,8 +85,8 @@ jobs:
       - name: Find package name
         id: package_name_centos7
         run: |
-          rpm_path=$(find . -name '${{ matrix.rpm-name }}-*-1.el7.noarch.rpm')
-          src_path=$(find . -name '${{ matrix.rpm-name }}-*-1.el7.src.rpm')
+          rpm_path=$(find . -name '${{ matrix.rpm-name }}-*.el7.noarch.rpm')
+          src_path=$(find . -name '${{ matrix.rpm-name }}-*.el7.src.rpm')
           echo "rpm_path=${rpm_path}" >> "$GITHUB_OUTPUT"
           echo "src_path=${src_path}" >> "$GITHUB_OUTPUT"
       - name: Attach CentOS 7 RPMs to the release
@@ -141,8 +114,8 @@ jobs:
       - name: Find package name
         id: package_name_almalinux8
         run: |
-          rpm_path=$(find . -name '${{ matrix.rpm-name }}-*-1.el8.noarch.rpm')
-          src_path=$(find . -name '${{ matrix.rpm-name }}-*-1.el8.src.rpm')
+          rpm_path=$(find . -name '${{ matrix.rpm-name }}-*.el8.noarch.rpm')
+          src_path=$(find . -name '${{ matrix.rpm-name }}-*.el8.src.rpm')
           echo "rpm_path=${rpm_path}" >> "$GITHUB_OUTPUT"
           echo "src_path=${src_path}" >> "$GITHUB_OUTPUT"
       - name: Attach AlmaLinux 8 RPMs to the release
@@ -170,8 +143,8 @@ jobs:
       - name: Find package name
         id: package_name_almalinux9
         run: |
-          rpm_path=$(find . -name '${{ matrix.rpm-name }}-*-1.el9.noarch.rpm')
-          src_path=$(find . -name '${{ matrix.rpm-name }}-*-1.el9.src.rpm')
+          rpm_path=$(find . -name '${{ matrix.rpm-name }}-*.el9.noarch.rpm')
+          src_path=$(find . -name '${{ matrix.rpm-name }}-*.el9.src.rpm')
           echo "rpm_path=${rpm_path}" >> "$GITHUB_OUTPUT"
           echo "src_path=${src_path}" >> "$GITHUB_OUTPUT"
       - name: Attach AlmaLinux 9 RPMs to the release

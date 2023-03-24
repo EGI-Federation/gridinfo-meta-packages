@@ -24,7 +24,7 @@ jobs:
           yum install -y rpm-build yum-utils rpmlint
           cd ${{ matrix.rpm-name }}
           yum-builddep -y ${{ matrix.rpm-name }}.spec
-      - name: build rpm
+      - name: Build rpm
         run: |
           cd ${{ matrix.rpm-name }}
           make clean rpm
