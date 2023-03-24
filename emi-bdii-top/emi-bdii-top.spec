@@ -1,6 +1,6 @@
 Name:          emi-bdii-top
 Version:       1.1.0
-Release:       2%{?dist}
+Release:       1%{?dist}
 Summary:       Meta-package for Top BDII
 Group:         Unknown
 License:       ASL 2.0
