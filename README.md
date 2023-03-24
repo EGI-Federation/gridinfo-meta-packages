@@ -4,6 +4,11 @@ This repository contains different meta packages for the BDII.
 BDII documentation is available at
 [gridinfo documentation site](https://gridinfo-documentation.readthedocs.io/).
 
+- [emi-bdii-site](./emi-bdii-site/): Meta-package for Site BDII.
+- [emi-bdii-top](./emi-bdii-top/): Meta-package for Top BDII.
+- [emi-resource-information-service](./emi-resource-information-service/): Meta-package
+  for the resource information service.
+
 ## Installing from packages
 
 ### On RHEL-based systems
@@ -46,9 +51,12 @@ The RPM will be available into the `build/RPMS` directory.
 - Prepare a PR with
   - Updating version and changelog in
     - [CHANGELOG](CHANGELOG)
-    - [gridinfo-meta-packages.spec](gridinfo-meta-packages.spec)
+    - The related meta-package(s)
 - Once the PR has been merged tag and release a new version in GitHub
-  - Packages will be built using GitHub Actions and attached to the release page
+  - Use of an arbitrary/global release version is required, as it covers all the
+    meta-packages at once
+  - All the meta-packages will be built using GitHub Actions and attached to the release
+    page
 
 ## History
 

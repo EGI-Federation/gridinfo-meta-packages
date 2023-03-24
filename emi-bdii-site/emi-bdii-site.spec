@@ -1,7 +1,7 @@
 Name:          emi-bdii-site
-Version:       1.0.2
+Version:       1.1.0
 Release:       1%{?dist}
-Summary:       Metapackage for site BDII
+Summary:       Meta-package for Site BDII
 Group:         Unknown
 License:       ASL 2.0
 URL:           https://github.com/EGI-Foundation/gridinfo-meta-packages
@@ -23,10 +23,10 @@ Requires:      glite-info-static
 %setup -q
 
 %build
-rm -rf %{buildroot}
-make install prefix=%{buildroot}
 
 %install
+rm -rf %{buildroot}
+make install prefix=%{buildroot}
 
 %clean
 rm -rf %{buildroot}
@@ -37,6 +37,9 @@ rm -rf %{buildroot}
 %license /usr/share/licenses/%{name}-%{version}/LICENSE.txt
 
 %changelog
+* Fri Mar 17 2023 Baptiste Grenier <baptiste.grenier@egi.eu> - 1.1.0-1
+- Build and release using GitHub Actions (#2) (Baptiste Grenier)
+
 * Fri Sep 04 2015 Maria Alandes <maria.alandes.pradillo@cern.ch> - 1.0.2-1
 - Removing yaim dependency (which is not available in CENTOS7)
 

@@ -7,3 +7,11 @@ and this project adheres to
 [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [1.1.0] - 2023-03-17
+
+### Changed
+
+- emi-bdii-site 1.1.0: update and package documentation, build using GitHub actions (#2) (Baptiste Grenier)
+- emi-bdii-top 1.1.0: update and package documentation, build using GitHub actions (#2) (Baptiste Grenier)
+- emi-resource-information-service 1.1.0: update and package documentation, build using GitHub actions (#2) (Baptiste Grenier)
