@@ -13,7 +13,8 @@ jobs:
   centos7:
     strategy:
       matrix:
-        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
+        rpm-name:
+          [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Build ${{ matrix.rpm-name }} CentOS 7 RPMs
     runs-on: ubuntu-latest
     container: quay.io/centos/centos:7
@@ -21,13 +22,14 @@ jobs:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
-      - name: install build requisites
+      - name: Install build requisites
         run: |
           yum install -y rpm-build yum-utils
           cd ${{ matrix.rpm-name }}
           yum-builddep -y ${{ matrix.rpm-name }}.spec
-      - name: build rpm
+      - name: Build rpm
         run: |
+          cd ${{ matrix.rpm-name }}
           make clean rpm
       - name: Upload RPMs
         uses: actions/upload-artifact@v3
@@ -40,7 +42,8 @@ jobs:
   almalinux8:
     strategy:
       matrix:
-        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
+        rpm-name:
+          [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Build ${{ matrix.rpm-name }} AlmaLinux 8 RPMs
     runs-on: ubuntu-latest
     container: almalinux:8
@@ -53,8 +56,9 @@ jobs:
           yum install -y rpm-build yum-utils
           cd ${{ matrix.rpm-name }}
           yum-builddep -y ${{ matrix.rpm-name }}.spec
-      - name: build rpm
+      - name: Build rpm
         run: |
+          cd ${{ matrix.rpm-name }}
           make clean rpm
       - name: Upload RPMs
         uses: actions/upload-artifact@v3
@@ -67,7 +71,8 @@ jobs:
   almalinux9:
     strategy:
       matrix:
-        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
+        rpm-name:
+          [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Build AlmaLinux 9 RPMs
     runs-on: ubuntu-latest
     container: almalinux:9
@@ -80,8 +85,9 @@ jobs:
           yum install -y rpm-build yum-utils
           cd ${{ matrix.rpm-name }}
           yum-builddep -y ${{ matrix.rpm-name }}.spec
-      - name: build rpm
+      - name: Build rpm
         run: |
+          cd ${{ matrix.rpm-name }}
           make clean rpm
       - name: Upload RPMs
         uses: actions/upload-artifact@v3
@@ -94,7 +100,8 @@ jobs:
   release7:
     strategy:
       matrix:
-        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
+        rpm-name:
+          [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Upload ${{ matrix.rpm-name }} CentOS 7 release artefacts
     needs: centos7
     runs-on: ubuntu-latest
@@ -122,7 +129,8 @@ jobs:
   release8:
     strategy:
       matrix:
-        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
+        rpm-name:
+          [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Upload ${{ matrix.rpm-name }} AlmaLinux 8 release artefacts
     needs: almalinux8
     runs-on: ubuntu-latest
@@ -150,7 +158,8 @@ jobs:
   release9:
     strategy:
       matrix:
-        rpm-name: [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
+        rpm-name:
+          [emi-bdii-site, emi-bdii-top, emi-resource-information-service]
     name: Upload ${{ matrix.rpm-name }} CentOS Stream 9 release artefacts
     needs: almalinux9
     runs-on: ubuntu-latest
