@@ -79,7 +79,7 @@ jobs:
     needs: centos7
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v5
         with:
           name: rpms7-${{ matrix.rpm-name }}
       - name: Find package name
@@ -108,7 +108,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v5
         with:
           name: rpms8-${{ matrix.rpm-name }}
       - name: Find package name
@@ -137,7 +137,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/download-artifact@v3
+      - uses: actions/download-artifact@v5
         with:
           name: rpms9-${{ matrix.rpm-name }}
       - name: Find package name
